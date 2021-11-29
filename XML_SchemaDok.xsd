@@ -138,8 +138,33 @@
 						<xs:attribute name="Belegungsnummer" type="xs:integer" use="required"/>
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="Rechnung" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Betrag">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:assertion test="$value gt 0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Rechnungsdatum" type="xs:date"/>
+							<xs:element name="DatumDesZahlungseingangs" type="xs:date" default="1111-11-11" nillable="true"/>
+							<xs:element name="Buchung" type="xs:integer"/>
+						</xs:sequence>
+						<xs:attribute name="Rechnungnummer" type="xs:integer" use="required"/>
+					</xs:complexType>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
+		<xs:keyref name="RechnungZuBuchung" refer="Belegung">
+			<xs:selector xpath="Rechnung"/>
+			<xs:field xpath="Buchung"/>
+		</xs:keyref>
+		<xs:key name="Rechnung">
+			<xs:selector xpath="Rechnung"/>
+			<xs:field xpath="@Rechnungnummer"/>
+		</xs:key>
 		<xs:keyref name="BelegungKunde" refer="KundenID">
 			<xs:selector xpath="Belegung"/>
 			<xs:field xpath="Kunde"/>

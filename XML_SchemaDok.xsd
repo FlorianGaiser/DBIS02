@@ -71,14 +71,14 @@
 							<xs:element name="Zimmeranzahl">
 								<xs:simpleType>
 									<xs:restriction base="xs:integer">
-										<xs:minInclusive value="0"/>
+										<xs:assertion test="$value gt 0"/>
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>
 							<xs:element name="Größe">
 								<xs:simpleType>
 									<xs:restriction base="xs:integer">
-										<xs:minInclusive value="0"/>
+										<xs:assertion test="$value gt 0"/>
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>
@@ -136,6 +136,7 @@
 							<xs:element name="Kunde" type="xs:integer"/>
 						</xs:sequence>
 						<xs:attribute name="Belegungsnummer" type="xs:integer" use="required"/>
+						<xs:assert test="/Ferienwohnungsagentur/Belegung[Anreisedatum lt Abreisedatum]"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="Rechnung" maxOccurs="unbounded">
@@ -149,8 +150,8 @@
 								</xs:simpleType>
 							</xs:element>
 							<xs:element name="Rechnungsdatum" type="xs:date"/>
-							<xs:element name="DatumDesZahlungseingangs" type="xs:date" default="1111-11-11" nillable="true"/>
-							<xs:element name="Buchung" type="xs:integer"/>
+							<xs:element name="DatumDesZahlungseingangs" type="xs:date" nillable="true"/>
+							<xs:element name="Buchungsnummer" type="xs:integer"/>
 						</xs:sequence>
 						<xs:attribute name="Rechnungnummer" type="xs:integer" use="required"/>
 					</xs:complexType>
@@ -159,7 +160,7 @@
 		</xs:complexType>
 		<xs:keyref name="RechnungZuBuchung" refer="Belegung">
 			<xs:selector xpath="Rechnung"/>
-			<xs:field xpath="Buchung"/>
+			<xs:field xpath="Buchungsnummer"/>
 		</xs:keyref>
 		<xs:key name="Rechnung">
 			<xs:selector xpath="Rechnung"/>

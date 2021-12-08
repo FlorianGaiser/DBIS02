@@ -18,3 +18,5 @@ where $b/Statusflag = 'Reservierung' and
 count $counter	  
 return <Reservierung>{$b/Ferienwohnung} <Anzahl>{$counter}</Anzahl> </Reservierung>  }
 </Ergebnis>
+
+
